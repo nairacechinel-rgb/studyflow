@@ -189,19 +189,44 @@ function navigateTo(page) {
 
 // ===== SIDEBAR =====
 function setupSidebar() {
-  document.getElementById('menuBtn').addEventListener('click', () => {
-    document.getElementById('sidebar').classList.add('open');
-    document.getElementById('overlay').classList.add('show');
-  });
-  document.getElementById('closeSidebar').addEventListener('click', closeSidebar);
-  document.getElementById('overlay').addEventListener('click', closeSidebar);
+  const menuBtn = document.getElementById('menuBtn');
+  const closeSidebarBtn = document.getElementById('closeSidebar');
+  const overlay = document.getElementById('overlay');
+  const sidebar = document.getElementById('sidebar');
+
+  // Proteção para o botão de abrir o menu
+  if (menuBtn) {
+    menuBtn.addEventListener('click', () => {
+      if (sidebar) sidebar.classList.add('open');
+      if (overlay) overlay.classList.add('show');
+    });
+  }
+
+  // Proteção para o botão de fechar
+  if (closeSidebarBtn) {
+    closeSidebarBtn.addEventListener('click', closeSidebar);
+  }
+
+  // Proteção para clicar fora e fechar
+  if (overlay) {
+    overlay.addEventListener('click', closeSidebar);
+  }
 }
 
 function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('show'); // era 'active'
-}
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
 
+  // Só tenta remover a classe se o sidebar existir na tela
+  if (sidebar) {
+    sidebar.classList.remove('open');
+  }
+  
+  // Só tenta remover a classe se o overlay existir na tela
+  if (overlay) {
+    overlay.classList.remove('show'); 
+  }
+}
 // ===== THEME =====
 function setupTheme() {
   document.getElementById('themeToggle').addEventListener('click', () => {
