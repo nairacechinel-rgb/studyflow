@@ -10,9 +10,9 @@
   "background_color": "#f4f6fc",
   "lang": "pt-BR",
   "categories": ["education", "productivity", "utilities"],
-  "icons": [
+ "icons": [
     {
-      "src": "web-app-manifest-192x192.png",
+      "src": "icons/web-app-manifest-192x192.png", 
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
@@ -39,8 +39,9 @@
       "short_name": "Pomodoro",
       "description": "Iniciar timer Pomodoro",
       "url": "./index.html#pomodoro",
-      "icons": [{ "src": "web-app-manifest-192x192.png", "sizes": "192x192" }]
-    },
+      "icons": [{ "src": "icons/web-app-manifest-192x192.png", "sizes": "192x192" }] 
+    }
+  ],
     {
       "name": "Tarefas",
       "short_name": "Tarefas",
