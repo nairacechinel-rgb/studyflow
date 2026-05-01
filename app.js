@@ -229,11 +229,12 @@ function closeSidebar() {
 }
 // ===== THEME =====
 function setupTheme() {
-  const themeBtn = document.getElementById('themeToggleBtn'); // Veja qual é o ID exato que está no seu código!
+  const themeBtn = document.getElementById('themeToggleBtn'); 
   
+  // O "if" abaixo impede o erro se o botão não estiver na página
   if (themeBtn) {
     themeBtn.addEventListener('click', () => {
-      // ... mantenha o código que muda o tema que já estava aqui ...
+       // aqui vai o código que você já tem para trocar o tema
     });
   }
 }
