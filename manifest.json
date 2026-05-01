@@ -11,22 +11,22 @@
   "lang": "pt-BR",
   "categories": ["education", "productivity", "utilities"],
   "icons": [
-  {
-    "src": "icons/icon-192.png",
-    "sizes": "192x192",
-    "type": "image/png",
-    "purpose": "any maskable"
-  },
-  {
-    "src": "icons/icon-512.png",
-    "sizes": "512x512",
-    "type": "image/png",
-    "purpose": "any maskable"
-  }
-]
+    {
+      "src": "icons/webappmanifest192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/webappmanifest512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
   "screenshots": [
     {
-      "src": "icons/icon-512.png",
+      "src": "icons/webappmanifest512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
@@ -39,21 +39,21 @@
       "short_name": "Pomodoro",
       "description": "Iniciar timer Pomodoro",
       "url": "./index.html#pomodoro",
-      "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
+      "icons": [{ "src": "icons/webappmanifest192x192.png", "sizes": "192x192" }]
     },
     {
       "name": "Tarefas",
       "short_name": "Tarefas",
       "description": "Ver minhas tarefas",
       "url": "./index.html#tasks",
-      "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
+      "icons": [{ "src": "icons/webappmanifest192x192.png", "sizes": "192x192" }]
     },
     {
       "name": "Cronograma",
       "short_name": "Cronograma",
       "description": "Ver cronograma semanal",
       "url": "./index.html#schedule",
-      "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
+      "icons": [{ "src": "icons/webappmanifest192x192.png", "sizes": "192x192" }]
     }
   ]
 }
