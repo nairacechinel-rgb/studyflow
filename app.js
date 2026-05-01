@@ -1489,12 +1489,12 @@ function renderPomodoroChart() {
   if (!container) return;
   // ===== STATS - POMODORO CHART =====
 function renderPomodoroChart() {
-  const container = document.getElementById('pomodoroChart');
-  if (!container) return;
+  const container = document.getElementById('pomodoroChart');
+  if (!container) return;
 
-  const days = statsPeriod === 'week' ? 7 : 30;
-  const labels = [];
-  const counts = [];
+  const days = statsPeriod === 'week' ? 7 : 30;
+  const labels = [];
+  const counts = [];
 
   for (let i = days - 1; i >= 0; i--) {
     const d = new Date();
@@ -1858,5 +1858,3 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
-
-});
