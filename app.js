@@ -22,7 +22,7 @@ let state = {
 
 let currentPage = 'dashboard';
 let currentWeekOffset = 0;
-let selectedColor = '#4CAF50';
+let selectedColor = '#06402B';
 let selectedSubjectColor = '#6C63FF';
 let activeNoteId = null;
 let taskFilter = 'all';
