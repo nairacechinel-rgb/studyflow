@@ -142,11 +142,16 @@ function setupNavigation() {
   document.querySelectorAll('[data-page]').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
+      e.stopPropagation();
       const page = link.getAttribute('data-page');
-      navigateTo(page);
+      if (page) navigateTo(page);
       if (window.innerWidth <= 768) closeSidebar();
     });
   });
+
+  // suporte à hash na URL
+  const hash = window.location.hash.replace('#', '');
+  if (hash) navigateTo(hash);
 }
 
 function navigateTo(page) {
