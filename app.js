@@ -1430,64 +1430,61 @@ function deleteGoal(id) {
 
 // ===== STATS =====
 function setStatsPeriod(period, btn) {
-  statsPeriod = period;
-  document.querySelectorAll('.stats-period .filter-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  renderStats();
+  statsPeriod = period;
+  document.querySelectorAll('.stats-period .filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderStats();
 }
 
 function renderStats() {
-  renderSubjectChart();
-  renderPomodoroChart();
-  renderHistoryChart();
+  renderSubjectChart();
+  renderPomodoroChart();
+  renderHistoryChart();
 }
 
 function renderSubjectChart() {
-  const container = document.getElementById('subjectChart');
-  if (!container) return;
+  const container = document.getElementById('subjectChart');
+  if (!container) return;
 
-  const days = statsPeriod === 'week' ? 7 : 30;
-  const since = new Date();
-  since.setDate(since.getDate() - days);
+  const days = statsPeriod === 'week' ? 7 : 30;
+  const since = new Date();
+  since.setDate(since.getDate() - days);
 
-  const sessions = (state.pomodoroSessions || []).filter(s =>
-    s.mode === 'pomodoro' && new Date(s.date) >= since
-  );
+  const sessions = (state.pomodoroSessions || []).filter(s =>
+    s.mode === 'pomodoro' && new Date(s.date) >= since
+  );
 
-  if (!sessions.length || !state.subjects.length) {
-    container.innerHTML = '<div class="bar-empty">Nenhum dado disponível</div>';
-    return;
-  }
+  if (!sessions.length || !state.subjects.length) {
+    container.innerHTML = '<div class="bar-empty">Nenhum dado disponível</div>';
+    return;
+  }
 
-  const subjectMinutes = {};
-  sessions.forEach(s => {
-    if (s.subject) {
-      subjectMinutes[s.subject] = (subjectMinutes[s.subject] || 0) + (s.duration || 0);
-    }
-  });
+  const subjectMinutes = {};
+  sessions.forEach(s => {
+    if (s.subject) {
+      subjectMinutes[s.subject] = (subjectMinutes[s.subject] || 0) + (s.duration || 0);
+    }
+  });
 
-  const max = Math.max(...Object.values(subjectMinutes), 1);
+  const max = Math.max(...Object.values(subjectMinutes), 1);
 
-  container.innerHTML = state.subjects.map(subj => {
-    const mins = subjectMinutes[subj.id] || 0;
-    const pct = Math.round((mins / max) * 100);
-    return `
-      <div class="bar-row">
-        <div class="bar-label">${subj.icon} ${subj.name}</div>
-        <div class="bar-track">
-          <div class="bar-fill" style="width:${pct}%;background:${subj.color}">
-            ${mins > 5 ? `<span>${mins}min</span>` : ''}
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('') || '<div class="bar-empty">Nenhum dado disponível</div>';
+  container.innerHTML = state.subjects.map(subj => {
+    const mins = subjectMinutes[subj.id] || 0;
+    const pct = Math.round((mins / max) * 100);
+    return `
+      <div class="bar-row">
+        <div class="bar-label">${subj.icon} ${subj.name}</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:${pct}%;background:${subj.color}">
+            ${mins > 5 ? `<span>${mins}min</span>` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('') || '<div class="bar-empty">Nenhum dado disponível</div>';
 }
 
-function renderPomodoroChart() {
-  const container = document.getElementById('pomodoroChart');
-  if (!container) return;
-  // ===== STATS - POMODORO CHART =====
+// ===== STATS - POMODORO CHART =====
 function renderPomodoroChart() {
   const container = document.getElementById('pomodoroChart');
   if (!container) return;
@@ -1496,75 +1493,73 @@ function renderPomodoroChart() {
   const labels = [];
   const counts = [];
 
-  for (let i = days - 1; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    const dateStr = d.toDateString();
-    labels.push(d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' }));
-    const count = (state.pomodoroSessions || []).filter(s =>
-      new Date(s.date).toDateString() === dateStr && s.mode === 'pomodoro'
-    ).length;
-    counts.push(count);
-  }
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dateStr = d.toDateString();
+    labels.push(d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' }));
+    const count = (state.pomodoroSessions || []).filter(s =>
+      new Date(s.date).toDateString() === dateStr && s.mode === 'pomodoro'
+    ).length;
+    counts.push(count);
+  }
 
-  const max = Math.max(...counts, 1);
+  const max = Math.max(...counts, 1);
 
-  if (counts.every(c => c === 0)) {
-    container.innerHTML = '<div class="bar-empty">Nenhum pomodoro registrado</div>';
-    return;
-  }
+  if (counts.every(c => c === 0)) {
+    container.innerHTML = '<div class="bar-empty">Nenhum pomodoro registrado</div>';
+    return;
+  }
 
-  container.innerHTML = counts.map((count, i) => `
-    <div class="bar-row">
-      <div class="bar-label">${labels[i]}</div>
-      <div class="bar-track">
-        <div class="bar-fill" style="width:${Math.round((count / max) * 100)}%">
-          ${count > 0 ? `<span>${count}</span>` : ''}
-        </div>
-      </div>
-    </div>
-  `).join('');
+  container.innerHTML = counts.map((count, i) => `
+    <div class="bar-row">
+      <div class="bar-label">${labels[i]}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${Math.round((count / max) * 100)}%">
+          ${count > 0 ? `<span>${count}</span>` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('');
 }
 
 // ===== STATS - HISTORY CHART =====
 function renderHistoryChart() {
-  const container = document.getElementById('historyChart');
-  if (!container) return;
+  const container = document.getElementById('historyChart');
+  if (!container) return;
 
-  const days = 30;
-  const bars = [];
+  const days = 30;
+  const bars = [];
 
-  for (let i = days - 1; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    const dateStr = d.toDateString();
-    const sessions = (state.pomodoroSessions || []).filter(s =>
-      new Date(s.date).toDateString() === dateStr && s.mode === 'pomodoro'
-    );
-    const minutes = sessions.reduce((acc, s) => acc + (s.duration || 0), 0);
-    bars.push({
-      date: d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' }),
-      minutes
-    });
-  }
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dateStr = d.toDateString();
+    const sessions = (state.pomodoroSessions || []).filter(s =>
+      new Date(s.date).toDateString() === dateStr && s.mode === 'pomodoro'
+    );
+    const minutes = sessions.reduce((acc, s) => acc + (s.duration || 0), 0);
+    bars.push({
+      date: d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' }),
+      minutes
+    });
+  }
 
-  const max = Math.max(...bars.map(b => b.minutes), 1);
+  const max = Math.max(...bars.map(b => b.minutes), 1);
 
-  container.innerHTML = `
-    <div class="history-chart-wrap">
-      ${bars.map(b => {
-        const h = Math.max(4, Math.round((b.minutes / max) * 76));
-        return `
-          <div class="h-bar" style="height:${h}px;opacity:${b.minutes > 0 ? 0.85 : 0.2}">
-            <div class="h-tooltip">${b.date}: ${b.minutes}min</div>
-          </div>
-        `;
-      }).join('')}
-    </div>
-  `;
-}
-
-// ===== NOTES =====
+  container.innerHTML = `
+    <div class="history-chart-wrap">
+      ${bars.map(b => {
+        const h = Math.max(4, Math.round((b.minutes / max) * 76));
+        return `
+          <div class="h-bar" style="height:${h}px;opacity:${b.minutes > 0 ? 0.85 : 0.2}">
+            <div class="h-tooltip">${b.date}: ${b.minutes}min</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}// ===== NOTES =====
 function renderNotes() {
   populateSubjectSelects();
   const sidebar = document.getElementById('notesSidebar');
