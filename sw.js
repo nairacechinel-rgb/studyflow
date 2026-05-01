@@ -1,5 +1,5 @@
 // ===== SERVICE WORKER - STUDYFLOW =====
-const CACHE_NAME = 'studyflow-v1';
+const CACHE_NAME = 'studyflow-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -32,19 +32,19 @@ self.addEventListener('install', (event) => {
 
 // ===== ACTIVATE =====
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Ativando...');
   event.waitUntil(
-    caches.keys()
-      .then((cacheNames) => {
-        return Promise.all(
-          cacheNames
-            .filter((name) => name !== CACHE_NAME)
-            .map((name) => {
-              console.log('[SW] Removendo cache antigo:', name);
-              return caches.delete(name);
-            })
-        );
-      })
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cache) => {
+          if (cache !== CACHE_NAME) {
+            console.log('Apagando cache antigo...');
+            return caches.delete(cache);
+          }
+        })
+      );
+    })
+  );
+});
       .then(() => {
         console.log('[SW] Ativado com sucesso');
         return self.clients.claim();
