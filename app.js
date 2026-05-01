@@ -1859,5 +1859,4 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
-
-
+});
