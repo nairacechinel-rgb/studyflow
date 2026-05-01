@@ -146,8 +146,8 @@ function setupNavigation() {
       const page = this.getAttribute('data-page');
       navigateTo(page);
       if (window.innerWidth <= 768) {
-        document.getElementById('sidebar').classList.remove('open');
-        document.getElementById('overlay').classList.remove('active');
+          document.getElementById('sidebar').classList.remove('open');
+          document.getElementById('overlay').classList.remove('show'); // era 'active'
       }
     });
   });
@@ -199,7 +199,7 @@ function setupSidebar() {
 
 function closeSidebar() {
   document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('overlay').classList.remove('show'); // era 'active'
 }
 
 // ===== THEME =====
