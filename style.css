@@ -1,7 +1,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --primary:#4CAF50;
+  --primary:#06402B;
   --primary-dark:#5a52d5;
   --primary-light:#ede9ff;
   --success:#2ecc71;
