@@ -151,9 +151,7 @@ function setupNavigation() {
       }
     });
   });
-}
 
-  // suporte à hash na URL
   const hash = window.location.hash.replace('#', '');
   if (hash) navigateTo(hash);
 }
