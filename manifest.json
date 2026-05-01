@@ -18,7 +18,7 @@
       "purpose": "any maskable"
     },
     {
-      "src": "web-app-manifest-512x512.png",
+      "src": "icons/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -26,7 +26,7 @@
   ],
   "screenshots": [
     {
-      "src": "web-app-manifest-512x512.png",
+      "src": "icons/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
