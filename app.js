@@ -23,7 +23,7 @@ let state = {
 let currentPage = 'dashboard';
 let currentWeekOffset = 0;
 let selectedColor = '#06402B';
-let selectedSubjectColor = '#6C63FF';
+let selectedSubjectColor = '#06402B';
 let activeNoteId = null;
 let taskFilter = 'all';
 let statsPeriod = 'week';
@@ -32,9 +32,9 @@ let studyDeck = [];
 let deferredInstallPrompt = null;
 
 const COLORS = [
-  '#6C63FF','#e74c3c','#2ecc71','#f39c12','#3498db',
-  '#9b59b6','#1abc9c','#e67e22','#e91e63','#00bcd4',
-  '#ff5722','#607d8b','#8bc34a','#ffc107','#795548'
+  '#06402B','#2ecc71','#0a6644','#1abc9c','#27ae60',
+  '#e74c3c','#f39c12','#3498db','#9b59b6','#e67e22',
+  '#e91e63','#00bcd4','#ff5722','#607d8b','#795548'
 ];
 
 const DAYS = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
@@ -107,7 +107,7 @@ function loadData() {
 
 function applySettings() {
   const s = state.settings;
-  document.body.setAttribute('data-theme', s.theme || 'light');
+  document.body.setAttribute('data-theme', s.theme || 'dark');
 
   const fields = {
     userName: s.userName,
@@ -206,7 +206,8 @@ function closeSidebar() {
 function setupTheme() {
   document.getElementById('themeToggle').addEventListener('click', () => {
     const current = state.settings.theme || 'light';
-    const next = current === 'light' ? 'dark' : current === 'dark' ? 'purple' : 'light';
+    // era: 'light' → 'dark' → 'purple' → 'light'
+    const next = current === 'light' ? 'dark' : current === 'dark' ? 'green-light' : 'light';
     setTheme(next);
     const sel = document.getElementById('themeSelect');
     if (sel) sel.value = next;
@@ -218,7 +219,7 @@ function setTheme(theme) {
   saveSetting('theme', theme);
   const icon = document.querySelector('#themeToggle i');
   if (icon) {
-    icon.className = theme === 'dark' ? 'fas fa-sun' : theme === 'purple' ? 'fas fa-star' : 'fas fa-moon';
+   icon.className = theme === 'dark' ? 'fas fa-sun' : theme === 'green-light' ? 'fas fa-leaf' : 'fas fa-moon';
   }
 }
 
@@ -558,7 +559,7 @@ function openScheduleModal(editId = null) {
     if (editIdEl) editIdEl.value = '';
     setVal('scheduleTitle', '');
     setVal('scheduleDay', getTodayIndex());
-    selectedColor = '#6C63FF';
+    selectedColor = '#06402B';
     buildColorPicker('schedulePicker', COLORS, c => { selectedColor = c; });
   }
   openModal('scheduleModal');
@@ -1044,7 +1045,7 @@ function openSubjectModal(editId = null) {
     setVal('subjectName', subj.name);
     setVal('subjectIcon', subj.icon);
     setVal('subjectGoalHours', subj.goalHours || 5);
-    selectedSubjectColor = subj.color || '#6C63FF';
+    selectedSubjectColor = subj.color || '#06402B';
     buildColorPicker('subjectColorPicker', COLORS, c => { selectedSubjectColor = c; });
     setColorPickerValue('subjectColorPicker', subj.color, c => { selectedSubjectColor = c; });
   } else {
@@ -1053,7 +1054,7 @@ function openSubjectModal(editId = null) {
     setVal('subjectName', '');
     setVal('subjectIcon', '📚');
     setVal('subjectGoalHours', 5);
-    selectedSubjectColor = '#6C63FF';
+    selectedSubjectColor = '#06402B';
     buildColorPicker('subjectColorPicker', COLORS, c => { selectedSubjectColor = c; });
   }
   openModal('subjectModal');
@@ -1305,7 +1306,7 @@ function renderGoals() {
 
   container.innerHTML = state.goals.map(g => {
     const pct = Math.min(100, Math.round((g.current / g.target) * 100));
-    const color = pct >= 100 ? '#2ecc71' : pct >= 50 ? '#f39c12' : '#6C63FF';
+    const color = pct >= 100 ? '#2ecc71' : pct >= 50 ? '#f39c12' : '#06402B';
 
     return `
       <div class="goal-item">
@@ -1767,7 +1768,7 @@ function clearAllData() {
     pomodoroSessions: [],
     settings: {
       userName: 'Naira',
-      theme: 'light',
+      theme: 'dark',
       soundEnabled: true,
       focusTime: 25,
       shortBreak: 5,
