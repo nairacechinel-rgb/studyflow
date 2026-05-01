@@ -127,7 +127,7 @@ body{
 .sidebar-footer a:hover{background:var(--primary-light);color:var(--primary)}
 
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150}
-.overlay.show{display:block}
+.overlay.show { display: block }
 
 .main-content{
   flex:1;
