@@ -229,14 +229,13 @@ function closeSidebar() {
 }
 // ===== THEME =====
 function setupTheme() {
-  document.getElementById('themeToggle').addEventListener('click', () => {
-    const current = state.settings.theme || 'light';
-    // era: 'light' → 'dark' → 'purple' → 'light'
-    const next = current === 'light' ? 'dark' : current === 'dark' ? 'green-light' : 'light';
-    setTheme(next);
-    const sel = document.getElementById('themeSelect');
-    if (sel) sel.value = next;
-  });
+  const themeBtn = document.getElementById('themeToggleBtn'); // Veja qual é o ID exato que está no seu código!
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      // ... mantenha o código que muda o tema que já estava aqui ...
+    });
+  }
 }
 
 function setTheme(theme) {
