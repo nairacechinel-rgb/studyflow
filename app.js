@@ -139,15 +139,19 @@ function saveSetting(key, value) {
 
 // ===== NAVIGATION =====
 function setupNavigation() {
-  document.querySelectorAll('[data-page]').forEach(link => {
-    link.addEventListener('click', e => {
+  const navLinks = document.querySelectorAll('[data-page]');
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
       e.preventDefault();
-      e.stopPropagation();
-      const page = link.getAttribute('data-page');
-      if (page) navigateTo(page);
-      if (window.innerWidth <= 768) closeSidebar();
+      const page = this.getAttribute('data-page');
+      navigateTo(page);
+      if (window.innerWidth <= 768) {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('overlay').classList.remove('active');
+      }
     });
   });
+}
 
   // suporte à hash na URL
   const hash = window.location.hash.replace('#', '');
