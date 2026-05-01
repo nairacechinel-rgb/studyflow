@@ -185,7 +185,7 @@ body{
 
 /* ===== PAGES ===== */
 .page{display:none;animation:fadeIn .3s ease}
-.page.active{display:block}
+.page.active { display: block }
 
 @keyframes fadeIn{
   from{opacity:0;transform:translateY(8px)}
