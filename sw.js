@@ -110,8 +110,8 @@ self.addEventListener('push', (event) => {
   const title = data.title || 'StudyFlow';
   const options = {
     body: data.body || 'Você tem uma notificação',
-    icon: 'icons/icon-192.png',
-    badge: 'icons/icon-96.png',
+    icon: 'web-app-manifest-192x192.png',   // ✅ correto
+    badge: 'web-app-manifest-192x192.png',  // ✅ correto
     vibrate: [200, 100, 200],
     data: { url: data.url || './' }
   };
