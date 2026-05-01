@@ -10,7 +10,7 @@
   "background_color": "#f4f6fc",
   "lang": "pt-BR",
   "categories": ["education", "productivity", "utilities"],
- "icons": [
+  "icons": [
     {
       "src": "icons/web-app-manifest-192x192.png", 
       "sizes": "192x192",
@@ -40,21 +40,20 @@
       "description": "Iniciar timer Pomodoro",
       "url": "./index.html#pomodoro",
       "icons": [{ "src": "icons/web-app-manifest-192x192.png", "sizes": "192x192" }] 
-    }
-  ],
+    },
     {
       "name": "Tarefas",
       "short_name": "Tarefas",
       "description": "Ver minhas tarefas",
       "url": "./index.html#tasks",
-      "icons": [{ "src": "web-app-manifest-192x192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "icons/web-app-manifest-192x192.png", "sizes": "192x192" }]
     },
     {
       "name": "Cronograma",
       "short_name": "Cronograma",
       "description": "Ver cronograma semanal",
       "url": "./index.html#schedule",
-      "icons": [{ "src": "web-app-manifest-192x192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "icons/web-app-manifest-192x192.png", "sizes": "192x192" }]
     }
   ]
 }
