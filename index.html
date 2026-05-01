@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#6C63FF"/>
+  <meta name="description" content="Meu Planner de Estudos - Organização completa"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="apple-touch-icon" href="icons/icon-192.png"/>
+  <title>StudyFlow</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+  <div id="app">
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i class="fas fa-brain"></i>
+          <span>StudyFlow</span>
+        </div>
+        <button class="close-sidebar" id="closeSidebar"><i class="fas fa-times"></i></button>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#" data-page="dashboard" class="active"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+        <li><a href="#" data-page="schedule"><i class="fas fa-calendar-week"></i><span>Cronograma</span></a></li>
+        <li><a href="#" data-page="tasks"><i class="fas fa-tasks"></i><span>Tarefas</span></a></li>
+        <li><a href="#" data-page="pomodoro"><i class="fas fa-clock"></i><span>Pomodoro</span></a></li>
+        <li><a href="#" data-page="subjects"><i class="fas fa-book"></i><span>Matérias</span></a></li>
+        <li><a href="#" data-page="flashcards"><i class="fas fa-layer-group"></i><span>Flashcards</span></a></li>
+        <li><a href="#" data-page="goals"><i class="fas fa-bullseye"></i><span>Metas</span></a></li>
+        <li><a href="#" data-page="stats"><i class="fas fa-chart-bar"></i><span>Estatísticas</span></a></li>
+        <li><a href="#" data-page="notes"><i class="fas fa-sticky-note"></i><span>Anotações</span></a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <a href="#" data-page="settings"><i class="fas fa-cog"></i><span>Configurações</span></a>
+      </div>
+    </nav>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main -->
+    <main class="main-content">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+        <div class="topbar-actions">
+          <button class="btn-icon" id="themeToggle" title="Alternar tema"><i class="fas fa-moon"></i></button>
+          <div class="user-avatar">N</div>
+        </div>
+      </header>
+
+      <div class="page-container">
+
+        <!-- DASHBOARD -->
+        <section class="page active" id="page-dashboard">
+          <div class="welcome-banner">
+            <div>
+              <h1 id="greetingText">Bom dia, Naira!</h1>
+              <p id="todayDate"></p>
+            </div>
+            <div class="streak-badge">
+              <i class="fas fa-fire"></i>
+              <span id="streakCount">0</span> dias
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <i class="fas fa-clock"></i>
+              <div>
+                <span class="stat-value" id="todayMinutes">0</span>
+                <span class="stat-label">min hoje</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-check-circle"></i>
+              <div>
+                <span class="stat-value" id="tasksCompleted">0</span>
+                <span class="stat-label">tarefas feitas</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-fire"></i>
+              <div>
+                <span class="stat-value" id="pomodorosDone">0</span>
+                <span class="stat-label">pomodoros</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-bullseye"></i>
+              <div>
+                <span class="stat-value" id="goalsProgress">0%</span>
+                <span class="stat-label">metas</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="card-header">
+                <h3><i class="fas fa-calendar-day"></i> Hoje</h3>
+                <button class="btn-small" onclick="navigateTo('schedule')">Ver tudo</button>
+              </div>
+              <div id="todayTasks" class="today-list"></div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h3><i class="fas fa-clock"></i> Pomodoro Rápido</h3>
+                <button class="btn-small" onclick="navigateTo('pomodoro')">Abrir</button>
+              </div>
+              <div class="mini-pomodoro">
+                <div class="mini-timer" id="miniTimerDisplay">25:00</div>
+                <div class="mini-controls">
+                  <button class="btn-round" id="miniStartBtn" onclick="miniPomodoroToggle()"><i class="fas fa-play"></i></button>
+                  <button class="btn-round secondary" onclick="miniPomodoroReset()"><i class="fas fa-redo"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h3><i class="fas fa-tasks"></i> Pendentes</h3>
+                <button class="btn-small" onclick="navigateTo('tasks')">Ver tudo</button>
+              </div>
+              <div id="pendingTasksList"></div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h3><i class="fas fa-bullseye"></i> Metas da Semana</h3>
+                <button class="btn-small" onclick="navigateTo('goals')">Ver tudo</button>
+              </div>
+              <div id="weekGoalsList"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CRONOGRAMA -->
+        <section class="page" id="page-schedule">
+          <div class="page-header">
+            <h2>Cronograma Semanal</h2>
+            <button class="btn-primary" onclick="openModal('scheduleModal')"><i class="fas fa-plus"></i> Adicionar</button>
+          </div>
+          <div class="week-nav">
+            <button onclick="changeWeek(-1)"><i class="fas fa-chevron-left"></i></button>
+            <span id="weekLabel"></span>
+            <button onclick="changeWeek(1)"><i class="fas fa-chevron-right"></i></button>
+          </div>
+          <div class="schedule-grid" id="scheduleGrid"></div>
+        </section>
+
+        <!-- TAREFAS -->
+        <section class="page" id="page-tasks">
+          <div class="page-header">
+            <h2>Tarefas</h2>
+            <button class="btn-primary" onclick="openModal('taskModal')"><i class="fas fa-plus"></i> Nova Tarefa</button>
+          </div>
+          <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">Todas</button>
+            <button class="filter-btn" data-filter="study">Estudo</button>
+            <button class="filter-btn" data-filter="home">Casa</button>
+            <button class="filter-btn" data-filter="leisure">Lazer</button>
+            <button class="filter-btn" data-filter="pending">Pendentes</button>
+            <button class="filter-btn" data-filter="done">Concluídas</button>
+          </div>
+          <div id="tasksList" class="tasks-list"></div>
+        </section>
+
+        <!-- POMODORO -->
+        <section class="page" id="page-pomodoro">
+          <div class="page-header">
+            <h2>Timer Pomodoro</h2>
+          </div>
+          <div class="pomodoro-container">
+            <div class="pomodoro-modes">
+              <button class="mode-btn active" data-mode="pomodoro">Foco</button>
+              <button class="mode-btn" data-mode="short">Pausa Curta</button>
+              <button class="mode-btn" data-mode="long">Pausa Longa</button>
+            </div>
+            <div class="pomodoro-ring">
+              <svg viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="90" class="ring-bg"/>
+                <circle cx="100" cy="100" r="90" class="ring-progress" id="ringProgress"/>
+              </svg>
+              <div class="timer-display">
+                <span id="timerDisplay">25:00</span>
+                <small id="timerLabel">Foco</small>
+              </div>
+            </div>
+            <div class="pomodoro-controls">
+              <button class="btn-round large" id="startBtn" onclick="toggleTimer()"><i class="fas fa-play"></i></button>
+              <button class="btn-round secondary" onclick="resetTimer()"><i class="fas fa-redo"></i></button>
+              <button class="btn-round secondary" onclick="skipTimer()"><i class="fas fa-forward"></i></button>
+            </div>
+            <div class="pomodoro-subject">
+              <label>Estudando:</label>
+              <select id="pomodoroSubject">
+                <option value="">Selecionar matéria...</option>
+              </select>
+            </div>
+            <div class="pomodoro-stats">
+              <div class="pomodoro-stat">
+                <span id="sessionCount">0</span>
+                <small>sessões hoje</small>
+              </div>
+              <div class="pomodoro-stat">
+                <span id="totalFocusTime">0min</span>
+                <small>tempo focado</small>
+              </div>
+            </div>
+            <div class="pomodoro-settings-inline">
+              <div class="time-setting">
+                <label>Foco (min)</label>
+                <input type="number" id="focusTime" value="25" min="1" max="60" onchange="updateTimerSettings()"/>
+              </div>
+              <div class="time-setting">
+                <label>Pausa Curta</label>
+                <input type="number" id="shortBreak" value="5" min="1" max="30" onchange="updateTimerSettings()"/>
+              </div>
+              <div class="time-setting">
+                <label>Pausa Longa</label>
+                <input type="number" id="longBreak" value="15" min="1" max="60" onchange="updateTimerSettings()"/>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- MATÉRIAS -->
+        <section class="page" id="page-subjects">
+          <div class="page-header">
+            <h2>Matérias</h2>
+            <button class="btn-primary" onclick="openModal('subjectModal')"><i class="fas fa-plus"></i> Nova Matéria</button>
+          </div>
+          <div id="subjectsList" class="subjects-grid"></div>
+        </section>
+
+        <!-- FLASHCARDS -->
+        <section class="page" id="page-flashcards">
+          <div class="page-header">
+            <h2>Flashcards</h2>
+            <button class="btn-primary" onclick="openModal('flashcardModal')"><i class="fas fa-plus"></i> Novo Card</button>
+          </div>
+          <div class="flashcard-filters">
+            <select id="flashcardSubjectFilter" onchange="renderFlashcards()">
+              <option value="">Todas as matérias</option>
+            </select>
+          </div>
+          <div id="flashcardStudyArea"></div>
+          <div id="flashcardsList" class="flashcards-grid"></div>
+        </section>
+
+        <!-- METAS -->
+        <section class="page" id="page-goals">
+          <div class="page-header">
+            <h2>Metas</h2>
+            <button class="btn-primary" onclick="openModal('goalModal')"><i class="fas fa-plus"></i> Nova Meta</button>
+          </div>
+          <div id="goalsList" class="goals-list"></div>
+        </section>
+
+        <!-- ESTATÍSTICAS -->
+        <section class="page" id="page-stats">
+          <div class="page-header">
+            <h2>Estatísticas</h2>
+          </div>
+          <div class="stats-period">
+            <button class="filter-btn active" data-period="week">Semana</button>
+            <button class="filter-btn" data-period="month">Mês</button>
+          </div>
+          <div class="stats-full-grid">
+            <div class="card">
+              <h3>Horas por Matéria</h3>
+              <div id="subjectChart" class="bar-chart"></div>
+            </div>
+            <div class="card">
+              <h3>Pomodoros por Dia</h3>
+              <div id="pomodoroChart" class="bar-chart"></div>
+            </div>
+            <div class="card full-width">
+              <h3>Histórico de Estudo</h3>
+              <div id="historyChart" class="history-chart"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ANOTAÇÕES -->
+        <section class="page" id="page-notes">
+          <div class="page-header">
+            <h2>Anotações</h2>
+            <button class="btn-primary" onclick="openModal('noteModal')"><i class="fas fa-plus"></i> Nova Nota</button>
+          </div>
+          <div class="notes-layout">
+            <div class="notes-sidebar" id="notesSidebar"></div>
+            <div class="notes-editor" id="notesEditor">
+              <div class="empty-state"><i class="fas fa-sticky-note"></i><p>Selecione ou crie uma anotação</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONFIGURAÇÕES -->
+        <section class="page" id="page-settings">
+          <div class="page-header">
+            <h2>Configurações</h2>
+          </div>
+          <div class="settings-list">
+            <div class="card">
+              <h3>Perfil</h3>
+              <div class="setting-item">
+                <label>Seu nome</label>
+                <input type="text" id="userName" value="Naira" onchange="saveSetting('userName', this.value)"/>
+              </div>
+              <div class="setting-item">
+                <label>Tema</label>
+                <select id="themeSelect" onchange="setTheme(this.value)">
+                  <option value="light">Claro</option>
+                  <option value="dark">Escuro</option>
+                  <option value="purple">Roxo</option>
+                </select>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Notificações</h3>
+              <div class="setting-item">
+                <label>Sons do Pomodoro</label>
+                <input type="checkbox" id="soundEnabled" checked onchange="saveSetting('soundEnabled', this.checked)"/>
+              </div>
+              <div class="setting-item">
+                <label>Notificações do navegador</label>
+                <button class="btn-small" onclick="requestNotifications()">Ativar</button>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Dados</h3>
+              <div class="setting-item">
+                <label>Exportar dados</label>
+                <button class="btn-small" onclick="exportData()">Exportar JSON</button>
+              </div>
+              <div class="setting-item">
+                <label>Importar dados</label>
+                <input type="file" id="importFile" accept=".json" onchange="importData(event)"/>
+              </div>
+              <div class="setting-item danger">
+                <label>Apagar todos os dados</label>
+                <button class="btn-small danger" onclick="clearAllData()">Apagar</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAIS -->
+  <div class="modal-overlay" id="scheduleModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="scheduleModalTitle">Adicionar ao Cronograma</h3>
+        <button onclick="closeModal('scheduleModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="scheduleEditId"/>
+        <div class="form-group">
+          <label>Título</label>
+          <input type="text" id="scheduleTitle" placeholder="Ex: Estudar Matemática"/>
+        </div>
+        <div class="form-group">
+          <label>Categoria</label>
+          <select id="scheduleCategory">
+            <option value="study">📚 Estudo</option>
+            <option value="home">🏠 Casa</option>
+            <option value="leisure">🎮 Lazer</option>
+            <option value="health">💪 Saúde</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Dia da semana</label>
+          <select id="scheduleDay">
+            <option value="0">Segunda-feira</option>
+            <option value="1">Terça-feira</option>
+            <option value="2">Quarta-feira</option>
+            <option value="3">Quinta-feira</option>
+            <option value="4">Sexta-feira</option>
+            <option value="5">Sábado</option>
+            <option value="6">Domingo</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Início</label>
+            <input type="time" id="scheduleStart" value="08:00"/>
+          </div>
+          <div class="form-group">
+            <label>Fim</label>
+            <input type="time" id="scheduleEnd" value="09:00"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Cor</label>
+          <div class="color-picker" id="schedulePicker"></div>
+        </div>
+        <div class="form-group">
+          <label>Recorrência</label>
+          <select id="scheduleRecurrence">
+            <option value="once">Uma vez</option>
+            <option value="weekly">Toda semana</option>
+            <option value="daily">Todo dia</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('scheduleModal')">Cancelar</button>
+        <button class="btn-primary" onclick="saveScheduleItem()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="taskModalTitle">Nova Tarefa</h3>
+        <button onclick="closeModal('taskModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="taskEditId"/>
+        <div class="form-group">
+          <label>Título</label>
+          <input type="text" id="taskTitle" placeholder="O que precisa fazer?"/>
+        </div>
+        <div class="form-group">
+          <label>Descrição</label>
+          <textarea id="taskDesc" placeholder="Detalhes..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Categoria</label>
+            <select id="taskCategory">
+              <option value="study">📚 Estudo</option>
+              <option value="home">🏠 Casa</option>
+              <option value="leisure">🎮 Lazer</option>
+              <option value="health">💪 Saúde</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Prioridade</label>
+            <select id="taskPriority">
+              <option value="low">🟢 Baixa</option>
+              <option value="medium">🟡 Média</option>
+              <option value="high">🔴 Alta</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Data</label>
+            <input type="date" id="taskDate"/>
+          </div>
+          <div class="form-group">
+            <label>Matéria</label>
+            <select id="taskSubject">
+              <option value="">Nenhuma</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('taskModal')">Cancelar</button>
+        <button class="btn-primary" onclick="saveTask()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="subjectModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Nova Matéria</h3>
+        <button onclick="closeModal('subjectModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="subjectEditId"/>
+        <div class="form-group">
+          <label>Nome da Matéria</label>
+          <input type="text" id="subjectName" placeholder="Ex: Matemática"/>
+        </div>
+        <div class="form-group">
+          <label>Ícone</label>
+          <select id="subjectIcon">
+            <option value="📚">📚 Geral</option>
+            <option value="🔢">🔢 Matemática</option>
+            <option value="🔬">🔬 Ciências</option>
+            <option value="📖">📖 Português</option>
+            <option value="🌍">🌍 Geografia</option>
+            <option value="📜">📜 História</option>
+            <option value="🧪">🧪 Química</option>
+            <option value="⚡">⚡ Física</option>
+            <option value="💻">💻 Programação</option>
+            <option value="🎨">🎨 Arte</option>
+            <option value="🎵">🎵 Música</option>
+            <option value="🌐">🌐 Inglês</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Cor</label>
+          <div class="color-picker" id="subjectColorPicker"></div>
+        </div>
+        <div class="form-group">
+          <label>Meta de horas semanais</label>
+          <input type="number" id="subjectGoalHours" value="5" min="1" max="40"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('subjectModal')">Cancelar</button>
+        <button class="btn-primary" onclick="saveSubject()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="flashcardModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Novo Flashcard</h3>
+        <button onclick="closeModal('flashcardModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="flashcardEditId"/>
+        <div class="form-group">
+          <label>Matéria</label>
+          <select id="flashcardSubject"></select>
+        </div>
+        <div class="form-group">
+          <label>Pergunta (Frente)</label>
+          <textarea id="flashcardFront" placeholder="Escreva a pergunta ou conceito..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Resposta (Verso)</label>
+          <textarea id="flashcardBack" placeholder="Escreva a resposta..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('flashcardModal')">Cancelar</button>
+        <button class="btn-primary" onclick="saveFlashcard()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="goalModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Nova Meta</h3>
+        <button onclick="closeModal('goalModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="goalEditId"/>
+        <div class="form-group">
+          <label>Título da Meta</label>
+          <input type="text" id="goalTitle" placeholder="Ex: Estudar 2h por dia"/>
+        </div>
+        <div class="form-group">
+          <label>Tipo</label>
+          <select id="goalType">
+            <option value="daily">Diária</option>
+            <option value="weekly">Semanal</option>
+            <option value="monthly">Mensal</option>
+            <option value="custom">Personalizada</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Valor atual</label>
+            <input type="number" id="goalCurrent" value="0" min="0"/>
+          </div>
+          <div class="form-group">
+            <label>Meta total</label>
+            <input type="number" id="goalTarget" value="100" min="1"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Unidade</label>
+          <input type="text" id="goalUnit" placeholder="Ex: horas, questões, páginas"/>
+        </div>
+        <div class="form-group">
+          <label>Prazo</label>
+          <input type="date" id="goalDeadline"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('goalModal')">Cancelar</button>
+        <button class="btn-primary" onclick="saveGoal()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="noteModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Nova Anotação</h3>
+        <button onclick="closeModal('noteModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Título</label>
+          <input type="text" id="noteTitle" placeholder="Título da anotação"/>
+        </div>
+        <div class="form-group">
+          <label>Matéria</label>
+          <select id="noteSubject">
+            <option value="">Sem matéria</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('noteModal')">Cancelar</button>
+        <button class="btn-primary" onclick="saveNote()">Criar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal small">
+      <div class="modal-header">
+        <h3>Confirmar</h3>
+        <button onclick="closeModal('confirmModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <p id="confirmMessage">Tem certeza?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('confirmModal')">Cancelar</button>
+        <button class="btn-primary danger" id="confirmBtn">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
