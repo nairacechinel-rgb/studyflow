@@ -45,7 +45,7 @@ self.addEventListener('activate', (event) => {
     })
   );
 });
-      .then(() => {
+      then(() => {
         console.log('[SW] Ativado com sucesso');
         return self.clients.claim();
       })
