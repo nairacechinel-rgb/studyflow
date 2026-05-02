@@ -137,16 +137,16 @@
       <!-- SCHEDULE -->
       <div class="page" id="page-schedule">
         <div class="page-header">
-          <h2><i class="fas fa-calendar-week"></i> Cronograma Semanal</h2>
-          <button class="btn-primary" onclick="openScheduleModal()"><i class="fas fa-plus"></i> Adicionar</button>
+        <h2><i class="fas fa-calendar-week"></i> Cronograma Semanal</h2>
+        <button class="btn-primary" onclick="openScheduleModal()"><i class="fas fa-plus"></i> Adicionar</button>
+     </div>
+      <div class="week-nav">
+      <button onclick="changeWeek(-1)"><i class="fas fa-chevron-left"></i></button>
+      <span id="weekLabel"></span>
+      <button onclick="changeWeek(1)"><i class="fas fa-chevron-right"></i></button>
         </div>
-        <div class="week-nav">
-          <button onclick="changeWeek(-1)"><i class="fas fa-chevron-left"></i></button>
-          <span id="week-label"></span>
-          <button onclick="changeWeek(1)"><i class="fas fa-chevron-right"></i></button>
-        </div>
-        <div class="schedule-grid" id="schedule-grid"></div>
-      </div>
+    <div class="schedule-grid" id="scheduleGrid"></div>
+    </div>
 
       <!-- TASKS -->
       <div class="page" id="page-tasks">
