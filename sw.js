@@ -42,13 +42,10 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
+    }).then(() => {
+      console.log('[SW] Ativado com sucesso');
+      return self.clients.claim();
     })
-  );
-});
-      then(() => {
-        console.log('[SW] Ativado com sucesso');
-        return self.clients.claim();
-      })
   );
 });
 
