@@ -212,6 +212,39 @@ function setupSidebar() {
     overlay.addEventListener('click', closeSidebar);
   }
 }
+// ===== FUNÇÃO DE NAVEGAÇÃO ENTRE TELAS =====
+function navigate(pageId, element) {
+  // 1. Atualiza a variável global
+  currentPage = pageId;
+
+  // 2. Oculta todas as páginas do aplicativo
+  document.querySelectorAll('.page-container').forEach(page => {
+    page.classList.remove('active');
+    page.style.display = 'none'; // Garante que as outras telas sumam
+  });
+
+  // 3. Mostra apenas a página selecionada
+  const targetPage = document.getElementById(pageId);
+  if (targetPage) {
+    targetPage.classList.add('active');
+    targetPage.style.display = 'block'; // Mostra a tela atual
+  }
+
+  // 4. Atualiza a cor verde (active) no link do menu lateral
+  if (element) {
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.classList.remove('active');
+    });
+    element.classList.add('active');
+  }
+
+  // 5. Fecha o menu lateral automaticamente (se estiver usando no celular)
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  
+  if (sidebar) sidebar.classList.remove('open');
+  if (overlay) overlay.classList.remove('show');
+}
 
 function closeSidebar() {
   const sidebar = document.getElementById('sidebar');
