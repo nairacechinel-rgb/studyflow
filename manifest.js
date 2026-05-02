@@ -1,0 +1,59 @@
+{
+  "name": "StudyFlow - Planner de Estudos",
+  "short_name": "StudyFlow",
+  "description": "Seu planner completo de estudos com pomodoro, flashcards, metas e cronograma",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#06402B",
+  "background_color": "#f4f6fc",
+  "lang": "pt-BR",
+  "categories": ["education", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "icons/web-app-manifest-192x192.png", 
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "icons/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Dashboard do StudyFlow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Pomodoro",
+      "short_name": "Pomodoro",
+      "description": "Iniciar timer Pomodoro",
+      "url": "./index.html#pomodoro",
+      "icons": [{ "src": "icons/web-app-manifest-192x192.png", "sizes": "192x192" }] 
+    },
+    {
+      "name": "Tarefas",
+      "short_name": "Tarefas",
+      "description": "Ver minhas tarefas",
+      "url": "./index.html#tasks",
+      "icons": [{ "src": "icons/web-app-manifest-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Cronograma",
+      "short_name": "Cronograma",
+      "description": "Ver cronograma semanal",
+      "url": "./index.html#schedule",
+      "icons": [{ "src": "icons/web-app-manifest-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}
