@@ -212,25 +212,14 @@ function setupSidebar() {
     overlay.addEventListener('click', closeSidebar);
   }
 }
-// ===== FUNÇÃO DE NAVEGAÇÃO ENTRE TELAS =====
+// ===== FUNÇÃO DE NAVEGAÇÃO CORRIGIDA =====
 function navigate(pageId, element) {
-  // 1. Atualiza a variável global
-  currentPage = pageId;
+  // 1. Chama a função principal de navegação que já trata os IDs "page-xxx"
+  // Se o ID passado for "page-flashcards", extraímos apenas "flashcards"
+  const cleanId = pageId.replace('page-', '');
+  navigateTo(cleanId);
 
-  // 2. Oculta todas as páginas do aplicativo
-  document.querySelectorAll('.page-container').forEach(page => {
-    page.classList.remove('active');
-    page.style.display = 'none'; // Garante que as outras telas sumam
-  });
-
-  // 3. Mostra apenas a página selecionada
-  const targetPage = document.getElementById(pageId);
-  if (targetPage) {
-    targetPage.classList.add('active');
-    targetPage.style.display = 'block'; // Mostra a tela atual
-  }
-
-  // 4. Atualiza a cor verde (active) no link do menu lateral
+  // 2. Atualiza o estado visual do menu lateral (active)
   if (element) {
     document.querySelectorAll('.nav-links a').forEach(link => {
       link.classList.remove('active');
@@ -238,12 +227,15 @@ function navigate(pageId, element) {
     element.classList.add('active');
   }
 
-  // 5. Fecha o menu lateral automaticamente (se estiver usando no celular)
+  // 3. Fecha o menu lateral e o overlay (mobile)
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('overlay');
   
   if (sidebar) sidebar.classList.remove('open');
-  if (overlay) overlay.classList.remove('show');
+  if (overlay) {
+    overlay.classList.remove('show');
+    overlay.classList.remove('active');
+  }
 }
 
 function closeSidebar() {
